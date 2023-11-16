@@ -1,71 +1,60 @@
-const button = document.querySelector('.button-add-task')
-const input = document.querySelector('.input-task')
-const listaCompleta = document.querySelector('.list-tasks')
+const button = document.querySelector('.button-add-task');
+const input = document.querySelector('.input-task');
+const listaCompleta = document.querySelector('.list-tasks');
 
-let minhaListaDeItens = []
+let minhaListaDeItens = [];
 
 function adicionarNovaTarefa() {
-    //verifica se o campo de input está vazio
-    if (input.value.trim() === '') {
-        alert('Por favor, preencha o campo de tarefa antes de clicar no botão.')
-        return; // Não adiciona a tarefa se o campo estiver vazio
-    }
+  const novaTarefa = input.value.trim();
 
-  minhaListaDeItens.push({
-    tarefa: input.value,
-    concluida: false,
-  })
+  if (novaTarefa === '') {
+    alert('Por favor, preencha o campo de tarefa antes de clicar no botão.');
+    return;
+  }
 
-  input.value = ''
+  minhaListaDeItens.push({ tarefa: novaTarefa, concluida: false });
+  input.value = '';
 
-  mostrarTarefas()
+  mostrarTarefas();
 }
 
 function mostrarTarefas() {
-  let novaLi = ''
-
-  // ['comprar café', 'estudar programação']
+  let novaLi = '';
 
   minhaListaDeItens.forEach((item, posicao) => {
-    novaLi =
-      novaLi +
-      `
+    novaLi += `
+      <li class="task ${item.concluida ? 'done' : ''}">
+        <img src="./img/checked.png" alt="check-na-tarefa" onclick="concluirTarefa(${posicao})">
+        <p>${item.tarefa}</p>
+        <img src="./img/trash.png" alt="tarefa-para-o-lixo" onclick="deletarItem(${posicao})">
+      </li>`;
+  });
 
-        <li class="task ${item.concluida && 'done'}">
-            <img src="./img/checked.png" alt="check-na-tarefa" onclick="concluirTarefa(${posicao})">
-            <p>${item.tarefa}</p>
-            <img src="./img/trash.png" alt="tarefa-para-o-lixo" onclick="deletarItem(${posicao})">
-        </li>
-        
-        `
-  })
+  listaCompleta.textContent = '';
+  listaCompleta.insertAdjacentHTML('beforeend', novaLi);
 
-  listaCompleta.innerHTML = novaLi
-
-  localStorage.setItem('lista', JSON.stringify(minhaListaDeItens))
+  localStorage.setItem('lista', JSON.stringify(minhaListaDeItens));
 }
 
 function concluirTarefa(posicao) {
-  minhaListaDeItens[posicao].concluida = !minhaListaDeItens[posicao].concluida
-
-  mostrarTarefas()
+  minhaListaDeItens[posicao].concluida = !minhaListaDeItens[posicao].concluida;
+  mostrarTarefas();
 }
 
 function deletarItem(posicao) {
-  minhaListaDeItens.splice(posicao, 1)
-
-  mostrarTarefas()
+  minhaListaDeItens.splice(posicao, 1);
+  mostrarTarefas();
 }
 
 function recarregarTarefas() {
-  const tarefasDoLocalStorage = localStorage.getItem('lista')
+  const tarefasDoLocalStorage = localStorage.getItem('lista');
 
   if (tarefasDoLocalStorage) {
-      minhaListaDeItens = JSON.parse(tarefasDoLocalStorage)
+    minhaListaDeItens = JSON.parse(tarefasDoLocalStorage);
   }
-// console.log(tarefasDoLocalStorage)
-  mostrarTarefas()
+
+  mostrarTarefas();
 }
 
-recarregarTarefas()
-button.addEventListener('click', adicionarNovaTarefa)
+recarregarTarefas();
+button.addEventListener('click', adicionarNovaTarefa);
