@@ -55,9 +55,9 @@ function recarregarTarefas() {
   const tarefasDoLocalStorage = localStorage.getItem('lista')
 
   if (tarefasDoLocalStorage) {
-    minhaListaDeItens = JSON.parse(tarefasDoLocalStorage)
+      minhaListaDeItens = JSON.parse(tarefasDoLocalStorage)
   }
-
+// console.log(tarefasDoLocalStorage)
   mostrarTarefas()
 }
 
