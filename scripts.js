@@ -5,6 +5,12 @@ const listaCompleta = document.querySelector('.list-tasks')
 let minhaListaDeItens = []
 
 function adicionarNovaTarefa() {
+    //verifica se o campo de input está vazio
+    if (input.value.trim() === '') {
+        alert('Por favor, preencha o campo de tarefa antes de clicar no botão.')
+        return; // Não adiciona a tarefa se o campo estiver vazio
+    }
+
   minhaListaDeItens.push({
     tarefa: input.value,
     concluida: false,
