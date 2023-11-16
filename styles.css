@@ -23,7 +23,7 @@ body{
 .input-task {
     border: none;
     border-radius: 5px;
-    width: 70%; /* Ajustado para uma largura relativa */
+    width: 75%; /* Ajustado para uma largura relativa */
     height: 40px;
     padding-left: 10px;
     margin-right: 10px; /* Adicionado um espaço à direita do campo de entrada */
